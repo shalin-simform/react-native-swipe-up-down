@@ -54,16 +54,13 @@ export default class SwipeUpDown extends Component<Props> {
     this.showFull = this.showFull.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.props.hasRef && this.props.hasRef(this);
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (event, gestureState) => true,
       onPanResponderMove: this._onPanResponderMove.bind(this),
       onPanResponderRelease: this._onPanResponderRelease.bind(this)
     });
-  }
-
-  componentDidMount() {
-    this.props.hasRef && this.props.hasRef(this);
   }
 
   updateNativeProps() {
@@ -151,7 +148,7 @@ export default class SwipeUpDown extends Component<Props> {
     return (
       <View
         ref={ref => (this.viewRef = ref)}
-        {...this._panResponder.panHandlers}
+        {...this._panResponder?.panHandlers}
         style={[
           styles.wrapSwipe,
           {
@@ -188,7 +185,6 @@ export default class SwipeUpDown extends Component<Props> {
 
 const styles = StyleSheet.create({
   wrapSwipe: {
-    padding: 10,
     backgroundColor: '#ccc',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
